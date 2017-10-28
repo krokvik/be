@@ -2,7 +2,8 @@ var express = require("express"),
 // path = require("path"),
     logger = require("morgan"),
 // cookieParser = require("cookie-parser"),
-    bodyParser = require("body-parser");
+    bodyParser = require("body-parser"),
+    authMiddleware = require("./src/auth/middleware")();
 // connect = require("connect"),
 // config = require("./config/dev");
 // //RedisStore = require('connect-redis')(connect.session);
@@ -35,7 +36,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // // My routes resolving
 
 app.use("/", require("./src/main"));
-// app.use("/game", require("./server/game/"));
+app.use("/", authMiddleware, require("./src/stats"));
 
 // // catch 404 and forward to error handler
 // app.use(function(req, res, next) {
