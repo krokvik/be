@@ -2,7 +2,7 @@ module.exports = class User {
     constructor(id, name, lastTimestamp) {
         this.id = id;
         this.name = name;
-        this.address = null;
+        this.wallet = null;
         this.lastTimestamp = lastTimestamp;
     }
 
@@ -10,7 +10,7 @@ module.exports = class User {
         return {
             id: this.id,
             name: this.name,
-            address: this.address,
+            wallet: this.wallet,
             lastTimestamp: this.lastTimestamp,
         };
     }
