@@ -2,8 +2,8 @@ const https = require("https");
 const url = require('url');
 
 class GoogleApiClient {
-    constructor (authToken) {
-        this.authToken = authToken;
+    constructor (authHeader) {
+        this.authHeader = authHeader;
     }
 
     getProfile(next, err) {
@@ -12,7 +12,7 @@ class GoogleApiClient {
         const options = Object.assign(
             {
                 headers: {
-                    "Authorization": "Bearer " + this.authToken,
+                    "Authorization": this.authHeader,
                     "Content-Type": "application/json"
                 }
             },
