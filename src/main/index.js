@@ -11,8 +11,7 @@ var router = express.Router();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-    res.write('Hello world');
-    res.send();
+    res.json({message: "Hello world"});
     // if (req.currentUser) {
     //     res.redirect('/game')
     // }
