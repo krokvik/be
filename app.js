@@ -2,7 +2,9 @@ var express = require("express"),
 // path = require("path"),
     logger = require("morgan"),
 // cookieParser = require("cookie-parser"),
-    bodyParser = require("body-parser");
+    bodyParser = require("body-parser"),
+    passport = require('passport'),
+    GoogleStrategy = require('passport-google-auth').Strategy;
 // connect = require("connect"),
 // config = require("./config/dev");
 // //RedisStore = require('connect-redis')(connect.session);
@@ -32,9 +34,26 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // app.use(express.static('public'));
 // app.use('/lib', express.static('public/bower_components'));
 
+passport.use(new GoogleStrategy(
+    {
+        clientId: '123-456-789',
+        clientSecret: 'shhh-its-a-secret',
+        callbackURL: 'https://www.example.com/auth/example/callback'
+    },
+    function(accessToken, refreshToken, profile, done) {
+        console.log(accessToken);
+        console.log(refreshToken);
+        console.log(JSON.stringify(profile));
+        done(null, {foo: 'bar'});
+        // User.findOrCreate(..., function (err, user) {
+        //     done(err, user);
+        // });
+    }
+));
+
 // // My routes resolving
 
-app.use("/", require("./src/main"));
+app.use("/", passport.authenticate('google'), require("./src/main"));
 // app.use("/game", require("./server/game/"));
 
 // // catch 404 and forward to error handler
