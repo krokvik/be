@@ -36,7 +36,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use("/", require("./src/main"));
 // app.use("/game", require("./server/game/"));
-
+app.use("/claim", require("./src/claim"));
 // // catch 404 and forward to error handler
 // app.use(function(req, res, next) {
 // var err = new Error("Not Found");
