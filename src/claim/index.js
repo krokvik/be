@@ -2,13 +2,14 @@
 
 var express = require('express');
 var router = express.Router();
-var Claim = require("../models/claim");
+var Chain = require("../models/chain");
 
-var claim = new Claim();
+var chain = new Chain();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-    res.send(claim.deployContract());
+  // res.send(chain.claimCoinsForAddress(req.body.addres, req.body.amount, req.body.id));
+  res.send(chain.claimCoinsForAddress('0x9A9CEaD074c536Baee02c23a716c447D7933DD92', 200, 1));
 });
 
 // router.post('/login', function(req, res, next) {
