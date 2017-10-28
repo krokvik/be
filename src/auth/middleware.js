@@ -2,14 +2,14 @@ var GoogleApiClient = require('../gapi/client');
 
 module.exports = function(options) {
     return function(req, res, next) {
-        var authToken = req.headers['x-authorization'];
+        var authHeader = req.headers['authorization'];
 
-        if (!authToken) {
+        if (!authHeader) {
             res.status(401).json({message: 'Authorization token is missing'});
             return;
         }
 
-        req.googleApiClient = new GoogleApiClient(authToken);
+        req.googleApiClient = new GoogleApiClient(authHeader);
 
         req.googleApiClient.getProfile(response => {
             if (response.error) {
