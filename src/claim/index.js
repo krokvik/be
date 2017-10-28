@@ -2,20 +2,13 @@
 
 var express = require('express');
 var router = express.Router();
-//var validator = require('validator');
-// var auth = require('../services/auth');
-// var config = require("../../config/dev");
-// var User = require("../models/user");
+var Claim = require("../models/claim");
 
-// var userModel = new User();
+var claim = new Claim();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-    res.json({message: "Hello world"});
-    // if (req.currentUser) {
-    //     res.redirect('/game')
-    // }
-    // res.render('index', { user: req.currentUser || ''});
+    res.send(claim.deployContract());
 });
 
 // router.post('/login', function(req, res, next) {

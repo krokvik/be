@@ -36,6 +36,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // // My routes resolving
 
 app.use("/", require("./src/main"));
+app.use("/claim", require("./src/claim"));
 app.use("/", authMiddleware, require("./src/stats"));
 
 // // catch 404 and forward to error handler
