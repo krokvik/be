@@ -3,12 +3,20 @@
 const express = require('express');
 const router = express.Router();
 const chain = require("../services/chain");
+const stats = require('../services/stats');
 const tryToClaim = require("../models/claims");
+const Timestamps = require('../services/timestamps');
 
 router.get('/', function(req, res, next) {
-  tryToClaim().then((claim) => {
-      res.send(chain.claimCoinsForAddress(req.body.address, 200, claim.id));
-  })
+  stats(req.googleApiClient, Timestamps.yesterday(), Timestamps.today()).then(yesterdaysResult => {
+    tryToClaim(req.user.id, yesterdaysResult.reward).then((claim) => {
+        res.json(chain.claimCoinsForAddress(req.body.address, 200, claim.id));
+    }, (error) => {
+      res.status(500).json({error: error});
+    })
+  }, () => {
+    res.status(500).json({error: 'failed to get stats'});
+  });
 });
 
 module.exports = router;

@@ -1,7 +1,7 @@
 'use strict';
 
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
 const stats = require('../services/stats');
 const Timestamps = require('../services/timestamps');
 
@@ -12,8 +12,21 @@ router.get('/get-stats', function(req, res, next) {
                 yesterday: yesterdaysResult,
                 today: todaysResult,
             })
+        }, () => {
+          res.status(500).json({error: 'failed to get stats'});
         });
+    }, () => {
+      res.status(500).json({error: 'failed to get stats'});
     });
 });
+
+router.get('/mybalance/', function(req, res, next) {
+  chain.getAddressBalance(req.user.wallet).then((balance) => {
+    res.json({balance: balance});
+  }, () => {
+    res.status(500).json({error: 'failed to get my balance'});
+  })
+});
+
 
 module.exports = router;
