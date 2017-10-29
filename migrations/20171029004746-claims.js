@@ -31,6 +31,10 @@ exports.up = function(db, callback) {
       amount: {
           type: 'int',
           notNull: true
+      },
+      completed_timestamp: {
+          type: 'int',
+          notNull: true
       }
   }, callback);
 };
