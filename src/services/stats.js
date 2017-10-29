@@ -1,5 +1,3 @@
-const Timestamps = require('../services/timestamps');
-
 const maxDailyReward = 100;
 const maxDailySteps = 10000;
 const severityRatio = 1.6
@@ -11,11 +9,11 @@ function getDailyReward(steps) {
     return Math.min(maxDailyReward, reward);
 }
 
-module.exports = function (googleApiClient) {
+module.exports = function (googleApiClient, startTimestamp, endTimestamp) {
     return new Promise(function (resolve, reject) {
         googleApiClient.getActivity(
-            Timestamps.then(),
-            Timestamps.now(),
+            startTimestamp,
+            endTimestamp,
             response => {
                 var steps = response.bucket[0].dataset[0].point.reduce((sum, item) => {
                     return sum + item.value[0].intVal;

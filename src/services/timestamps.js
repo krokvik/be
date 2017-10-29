@@ -2,6 +2,10 @@ module.exports.now = function () {
     return Date.now();
 };
 
-module.exports.then = function () {
-    return Date.now() - 86400000;
+module.exports.today = function () {
+    return new Date().setHours(0,0,0,0);
+};
+
+module.exports.yesterday = function () {
+    return new Date().setHours(0,0,0,0) - 86400000;
 };
