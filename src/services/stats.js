@@ -15,9 +15,11 @@ module.exports = function (googleApiClient, startTimestamp, endTimestamp) {
             startTimestamp,
             endTimestamp,
             response => {
-                var steps = response.bucket[0].dataset[0].point.reduce((sum, item) => {
-                    return sum + item.value[0].intVal;
-                }, 0);
+                var steps = response.bucket ? response.bucket.reduce((sum, bucket) => {
+                    return sum + bucket.dataset[0].point.reduce((sum, item) => {
+                        return sum + item.value[0].intVal;
+                    }, 0);
+                }, 0) : 0;
                 console.log('steps = ' + steps);
                 resolve({
                     reward: getDailyReward(steps),
