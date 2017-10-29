@@ -21,14 +21,6 @@ router.get('/get-stats', function(req, res, next) {
     });
 });
 
-// router.get('/mybalance/', function(req, res, next) {
-//   chain.getAddressBalance(req.user.wallet).then((balance) => {
-//     res.json({balance: balance});
-//   }, () => {
-//     res.status(500).json({error: 'failed to get my balance'});
-//   })
-// });
-
 router.get('/user/', function(req, res, next) {
   chain.getAddressBalance(req.user.wallet).then((balance) => {
     res.json({user: req.user, balance: balance});

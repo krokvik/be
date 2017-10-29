@@ -7,7 +7,7 @@ const stats = require('../services/stats');
 const tryToClaim = require("../models/claims");
 const Timestamps = require('../services/timestamps');
 
-router.push('/', function(req, res, next) {
+router.post('/', function(req, res, next) {
   stats(req.googleApiClient, Timestamps.yesterday(), Timestamps.today()).then(yesterdaysResult => {
     tryToClaim(req.user.id, yesterdaysResult.reward).then((claim) => {
         res.json(chain.claimCoinsForAddress(req.user.wallet, yesterdaysResult.reward, claim.id));
