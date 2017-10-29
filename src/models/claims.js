@@ -34,7 +34,7 @@ module.exports.tryToClaim = function(userId, amount) {
                 createClaim(newClaim);
                 resolve(newClaim);
             } else {
-              reject('too many claims')
+              reject('This claim exists')
             }
         });
     });
