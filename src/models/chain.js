@@ -9,6 +9,7 @@ const utils = require('web3-utils');
 // const solc = require('solc');
 
 const config = require('../config');
+const local = require('../config/local');
 
 module.exports = class Chain {
     constructor() {
@@ -20,7 +21,7 @@ module.exports = class Chain {
     }
 
     deployContract() {
-      return new this.web3.eth.Contract(config.abiArray, config.contractAddress, {
+      return new this.web3.eth.Contract(config.abiArray, local.contractAddress, {
         gasPrice: '20000000000' // default gas price in wei, 20 gwei in this case
       });
     }
@@ -31,16 +32,19 @@ module.exports = class Chain {
       }
       let promise = new Promise((resolve, reject) => {
         let owner = this.mainContract.methods.owner().call({}, (error, owner) => {
-          this.web3.eth.personal.unlockAccount(owner, config.password);
-          this.mainContract.methods.sendPersonalSportReward(address, amount, id).send(
-            {from: owner},
-            (error, result) => {
-              if (error) {
-                reject(error)
-              } else {
-                resolve(result);
+          this.web3.eth.personal.unlockAccount(owner, local.password, (error, result) => {
+            console.log(error, result);
+            this.mainContract.methods.sendPersonalSportReward(address, amount, id).send(
+              {from: owner},
+              (error, result) => {
+                if (error) {
+                  reject(error)
+                } else {
+                  resolve(result);
+                }
               }
-            });
+            );
+          });
       })
     });
     return promise;
