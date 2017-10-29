@@ -1,4 +1,5 @@
-var GoogleApiClient = require('../gapi/client');
+const GoogleApiClient = require("../gapi/client");
+const User = require("../models/user");
 
 module.exports = function(options) {
     return function(req, res, next) {
@@ -17,8 +18,10 @@ module.exports = function(options) {
                 return;
             }
 
-            req.user = response;
-            next()
+            User.findOrCreateUser(response.id, response.name).then(user => {
+                req.user = user;
+                next();
+            });
         })
     }
 }

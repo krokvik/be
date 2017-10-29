@@ -27,7 +27,6 @@ class GoogleApiClient {
                 body += data;
             });
             res.on("end", () => {
-                console.log(body);
                 next(JSON.parse(body));
             });
         };
