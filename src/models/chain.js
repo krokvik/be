@@ -3,10 +3,6 @@
 const Web3 = require('web3');
 const net = require('net');
 const utils = require('web3-utils');
-// const util = require('ethereumjs-util');
-// const path = require('path');
-// const fs = require('fs');
-// const solc = require('solc');
 
 const config = require('../config');
 const local = require('../config/local');
@@ -33,7 +29,6 @@ module.exports = class Chain {
       let promise = new Promise((resolve, reject) => {
         let owner = this.mainContract.methods.owner().call({}, (error, owner) => {
           this.web3.eth.personal.unlockAccount(owner, local.password, (error, result) => {
-            console.log(error, result);
             this.mainContract.methods.sendPersonalSportReward(address, amount, id).send(
               {from: owner},
               (error, result) => {
