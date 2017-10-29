@@ -9,7 +9,10 @@ const Timestamps = require('../services/timestamps');
 
 router.post('/', function(req, res, next) {
   stats(req.googleApiClient, Timestamps.yesterday(), Timestamps.today()).then(yesterdaysResult => {
+    console.log('User', req.user);
+    console.log('User id', req.user.id);
     tryToClaim(req.user.id, yesterdaysResult.reward).then((claim) => {
+        console.log('Claim', claim);
         res.json(chain.claimCoinsForAddress(req.user.wallet, yesterdaysResult.reward, claim.id));
     }, (error) => {
       res.status(500).json({error: error});

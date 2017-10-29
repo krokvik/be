@@ -1,8 +1,8 @@
 const db = require("../services/sqlite");
+const Timestamps = require("../services/timestamps");
 
 function newClaim(userId, amount) {
     return {
-        name: name,
         user_id: userId,
         amount: amount,
         lastTimestamp: Timestamps.today(),
@@ -11,7 +11,7 @@ function newClaim(userId, amount) {
 
 function findLastUserClaim(userId) {
     return new Promise(function (resolve, reject) {
-        db.get("SELECT * FROM claims WHERE user_id = ? ORDER BY id DESC LIMIT 1", id, (err, row) => {
+        db.get("SELECT * FROM claims WHERE user_id = ? ORDER BY id DESC LIMIT 1", userId, (err, row) => {
             resolve(row);
         });
     });
