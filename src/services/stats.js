@@ -6,7 +6,7 @@ const severityRatio = 1.6
 
 function getDailyReward(steps) {
     const reward = maxDailyReward * Math.pow(steps / (2 * maxDailySteps - steps), severityRatio);
-    return Math.min(maxDailyReward, reward);
+    return Math.min(maxDailyReward, Math.round(reward));
 }
 
 module.exports = function (googleApiClient, startTimestamp, endTimestamp) {
