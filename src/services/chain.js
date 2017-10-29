@@ -47,9 +47,8 @@ class Chain {
 
   getAddressBalance(address) {
     if (!utils.isAddress(address)) {
-      return false;
+      return new Promise((resolve, reject) => {resolve(0)});
     }
-    console.log(this.mainContract.methods);
     let promise = this.mainContract.methods.balanceOf(address).call();
     return promise;
   }
