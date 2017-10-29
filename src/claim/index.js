@@ -7,10 +7,10 @@ const stats = require('../services/stats');
 const tryToClaim = require("../models/claims");
 const Timestamps = require('../services/timestamps');
 
-router.get('/', function(req, res, next) {
+router.push('/', function(req, res, next) {
   stats(req.googleApiClient, Timestamps.yesterday(), Timestamps.today()).then(yesterdaysResult => {
     tryToClaim(req.user.id, yesterdaysResult.reward).then((claim) => {
-        res.json(chain.claimCoinsForAddress(req.body.address, 200, claim.id));
+        res.json(chain.claimCoinsForAddress(req.user.wallet, yesterdaysResult.reward, claim.id));
     }, (error) => {
       res.status(500).json({error: error});
     })
