@@ -25,8 +25,7 @@ function createClaim(claim) {
         claim.completedTimestamp
     );
 }
-
-module.exports.tryToClaim = function(userId, amount) {
+let tryToClaim = function(userId, amount) {
     return new Promise((resolve, reject) => {
         findLastUserClaim(userId).then(claim => {
             if (!claim || claim.completed_timestamp < Timestamps.today()) {
@@ -39,3 +38,5 @@ module.exports.tryToClaim = function(userId, amount) {
         });
     });
 };
+
+module.exports = tryToClaim;
