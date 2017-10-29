@@ -25,18 +25,11 @@ var app = express();
 app.use(logger("combined"));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-// app.use(cookieParser());
-// //app.use(connect.session({
-// //    store: new RedisStore(config.redis),
-// //    secret: 'your secret here'
-// //}  ));
-// app.use(express.static('public'));
-// app.use('/lib', express.static('public/bower_components'));
 
 // // My routes resolving
 
 app.use("/", require("./src/main"));
-app.use("/claim", require("./src/claim"));
+app.use("/claim", authMiddleware, require("./src/claim"));
 app.use("/", authMiddleware, require("./src/stats"));
 
 // // catch 404 and forward to error handler
