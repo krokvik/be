@@ -4,6 +4,7 @@ const express = require('express');
 const router = express.Router();
 const stats = require('../services/stats');
 const Timestamps = require('../services/timestamps');
+const chain = require("../services/chain");
 
 router.get('/get-stats', function(req, res, next) {
     stats(req.googleApiClient, Timestamps.today(), Timestamps.now()).then(todaysResult => {
