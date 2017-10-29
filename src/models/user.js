@@ -58,3 +58,8 @@ module.exports.findOrCreateUser = function(id, name) {
         });
     });
 };
+
+module.exports.updateWallet = function(user, wallet) {
+    user.wallet = wallet;
+    db.run("UPDATE users SET wallet = ? WHERE id = ?", user.wallet, user.id);
+};

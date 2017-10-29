@@ -29,6 +29,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // // My routes resolving
 
 app.use("/", require("./src/main"));
+app.use("/set-wallet", authMiddleware, require("./src/actions/set-wallet"));
 app.use("/claim", authMiddleware, require("./src/claim"));
 app.use("/", authMiddleware, require("./src/stats"));
 
