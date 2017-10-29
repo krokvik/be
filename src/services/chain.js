@@ -27,8 +27,10 @@ class Chain {
         return false;
       }
       let promise = new Promise((resolve, reject) => {
-        let owner = this.mainContract.methods.owner().call({}, (error, owner) => {
+        this.mainContract.methods.owner().call({}, (error, owner) => {
+          console.log('Owner', owner);
           this.web3.eth.personal.unlockAccount(owner, local.password, (error, result) => {
+            id = Date.now();
             this.mainContract.methods.sendPersonalSportReward(address, amount, id).send(
               {from: owner},
               (error, result) => {

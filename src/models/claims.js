@@ -1,11 +1,13 @@
 const db = require("../services/sqlite");
 const Timestamps = require("../services/timestamps");
+const uuid = require("uuid/v4");
 
 function newClaim(userId, amount) {
     return {
+        id: uuid(),
         user_id: userId,
         amount: amount,
-        lastTimestamp: Timestamps.today(),
+        completed_timestamp: Timestamps.today(),
     };
 }
 
@@ -19,19 +21,20 @@ function findLastUserClaim(userId) {
 
 function createClaim(claim) {
     db.run(
-        "INSERT INTO claims (user_id, amount, completed_timestamp) VALUES (?, ?, ?)",
-        claim.userId,
+        "INSERT INTO claims (id, user_id, amount, completed_timestamp) VALUES (?, ?, ?, ?)",
+        claim.id,
+        claim.user_id,
         claim.amount,
-        claim.completedTimestamp
+        claim.completed_timestamp
     );
 }
 let tryToClaim = function(userId, amount) {
     return new Promise((resolve, reject) => {
         findLastUserClaim(userId).then(claim => {
             if (!claim || claim.completed_timestamp < Timestamps.today()) {
-                newClaim = newClaim(userId, amount)
-                createClaim(newClaim);
-                resolve(newClaim);
+                let nclaim = newClaim(userId, amount)
+                createClaim(nclaim);
+                resolve(nclaim);
             } else {
               reject('This claim exists')
             }

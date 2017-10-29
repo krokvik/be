@@ -17,10 +17,10 @@ exports.setup = function(options, seedLink) {
 exports.up = function(db, callback) {
   db.createTable('claims', {
       id: {
-          type: 'int',
+          type: 'string',
+          length: 100,
           notNull: true,
-          primaryKey: true,
-          autoIncrement: true
+          primaryKey: true
       },
       user_id: {
           type: 'string',
